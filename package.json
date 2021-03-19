@@ -1,0 +1,26 @@
+{
+  "name": "node-notebook",
+  "version": "1.0.0",
+  "description": "Note down or jot down anything in any editable file.",
+  "main": "index.js",
+  "keywords": [
+    "storage",
+    "utility",
+    "productivity",
+    "database",
+    "files",
+    "editing",
+    "text-editor",
+    "text editor",
+    "file editor",
+    "file-editor"
+  ],
+  "author": "GamerCoder215",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": "^10.0.0"
+  },
+  "dependencies": {
+    "fs": "0.0.1-security"
+  }
+}
