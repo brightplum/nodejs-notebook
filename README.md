@@ -4,7 +4,7 @@ Nodebook is a module that you can use to edit, manage, and configure external fi
 
 ```yml
 # with npm
-npm install node-notebook
+npm install nodejs-notebook
 ```
 
 # Usage
@@ -14,7 +14,7 @@ Nodebook has a default class in case you want to edit files that do not have the
 
 ### Setup
 ```js
-const Nodebook = require('node-notebook');
+const Nodebook = require('nodejs-notebook');
 
 const myNotebook = new Nodebook.Nodebook('file name', 'txt');
 ```
@@ -108,4 +108,4 @@ console.log(myNotebook.content());
 ```
 
 ## Documentation
-There are more customized classes for different types of files on the [Documentation]().
+There are more customized classes for different types of files on the [Documentation](https://gamercoder215.gitbook.io/nodebook).
