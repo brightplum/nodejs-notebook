@@ -11,6 +11,7 @@ const { NodebookError } = require('./src/NodebookError.js');
 const { JSONotebook } = require('./src/notebooks/JSONotebook.js');
 const { TXTNotebook } = require('./src/notebooks/TXTNotebook.js');
 const { MDNotebook } = require('./src/notebooks/MDNotebook.js');
+const { YMLNotebook } = require('./src/notebooks/YMLNotebook.js');
 
 const { JSNotebook } = require('./src/code-notebooks/JSNotebook.js');
 const { BashNotebook } = require('./src/code-notebooks/BashNotebook.js');
@@ -23,5 +24,6 @@ module.exports = {
 	JSNotebook,
 	BashNotebook,
 	MDNotebook,
-	CPPNotebook
-}
+	CPPNotebook,
+	YMLNotebook,
+};

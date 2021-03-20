@@ -18,9 +18,10 @@
   "author": "GamerCoder215",
   "license": "Apache-2.0",
   "engines": {
-    "node": "^10.0.0"
+    "node": ">=10.0.0"
   },
   "dependencies": {
-    "fs": "0.0.1-security"
+    "fs": "0.0.1-security",
+    "js-yaml": "^4.0.0"
   }
 }

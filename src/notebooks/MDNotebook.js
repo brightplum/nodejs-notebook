@@ -3,55 +3,56 @@ const fs = require('fs');
 const { NodebookError } = require('../NodebookError.js');
 const { Nodebook } = require('../Nodebook.js');
 
-let unedfinedErr = new NodebookError(`'url' cannot be undefined.`);
-let arrayOnlyErr = new NodebookError(`'list' must be a valid array.`);
+const undefinedErr = new NodebookError('\'url\' cannot be undefined.');
+const arrayOnlyErr = new NodebookError('\'list\' must be a valid array.');
 
 class MDNotebook extends Nodebook {
 	constructor(name) {
-		super(name, 'md')
+		super(name, 'md');
 		this.name = name;
 		MDNotebook.prototype.name = name;
 	}
 	note(value) {
-		if (!value) throw new NodebookError(`note() value cannot be undefined.`);
-		let name = MDNotebook.prototype.name;
-		let filename = name.replace(/[ ]/g, '_');
+		if (!value) throw new NodebookError('note() value cannot be undefined.');
+		const name = MDNotebook.prototype.name;
+		const filename = name.replace(/[ ]/g, '_');
 
 		fs.writeFileSync(`${filename}.md`, value, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
-		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Wrote File "${filename}.md"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 })
+		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Wrote File "${filename}.md"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 	}
 	createHeader(value, options) {
-		if (!value) throw new NodebookError(`note() value cannot be undefined.`);
-		if (typeof options !== 'object') throw new NodebookError(`note() options must be an object.`);
-		let name = MDNotebook.prototype.name;
-		let filename = name.replace(/[ ]/g, '_');
+		if (!value) throw new NodebookError('note() value cannot be undefined.');
+		if (typeof options !== 'object') throw new NodebookError('note() options must be an object.');
+		const name = MDNotebook.prototype.name;
+		const filename = name.replace(/[ ]/g, '_');
 
 		let header = '# ';
-			if (options.type == '1') header = '# ';
-			else if (options.type == '2') header = '## ';
-			else if (options.type == '3') header = '### ';
-			else if (options.type == '4') header = '#### ';
-			else if (options.type == '5') header = '##### ';
-			else if (options.type == '6') header = '###### ';
+		if (options.type == '1') header = '# ';
+		else if (options.type == '2') header = '## ';
+		else if (options.type == '3') header = '### ';
+		else if (options.type == '4') header = '#### ';
+		else if (options.type == '5') header = '##### ';
+		else if (options.type == '6') header = '###### ';
 		fs.writeFileSync(`${filename}.md`, `${header}${value}\n`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Added Header Type "h${options.type}" In File "${filename}.md"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 	}
 	createLink(url, text) {
 		if (!url) throw undefinedErr;
-		let name = MDNotebook.prototype.name;
-		let filename = name.replace(/[ ]/g, '_');
+		const name = MDNotebook.prototype.name;
+		const filename = name.replace(/[ ]/g, '_');
 
 		if (!text) {
 			fs.writeFileSync(`${filename}.md`, `[${url}](${url})\n`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
-		} else {
+		}
+		else {
 			fs.writeFileSync(`${filename}.md`, `[${text}](${url})\n`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 		}
 		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Created Link In File "${filename}.md"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 	}
 	createList(list, options) {
 		if (typeof list !== 'object') throw arrayOnlyErr;
-		let name = MDNotebook.prototype.name;
-		let filename = name.replace(/[ ]/g, '_');
+		const name = MDNotebook.prototype.name;
+		const filename = name.replace(/[ ]/g, '_');
 
 		let listType = '*';
 		if (options.type == 'unordered') listType = '*';
@@ -62,7 +63,8 @@ class MDNotebook extends Nodebook {
 		while (i < list.length) {
 			if (listType === '*') {
 				fs.writeFileSync(`${filename}.md`, `* ${list[i]}\n`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
-			} else if (listType === '1') {
+			}
+			else if (listType === '1') {
 				fs.writeFileSync(`${filename}.md`, `${i + 1}. ${list[i]}\n`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 			}
 			i++;
@@ -72,5 +74,5 @@ class MDNotebook extends Nodebook {
 }
 
 module.exports = {
-	MDNotebook
-}
+	MDNotebook,
+};
