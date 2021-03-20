@@ -7,6 +7,7 @@ Created by GamerCoder215
 */
 
 const { NodebookError } = require('./src/NodebookError.js');
+const { Nodebook } = require('./src/Nodebook.js');
 
 const { JSONotebook } = require('./src/notebooks/JSONotebook.js');
 const { TXTNotebook } = require('./src/notebooks/TXTNotebook.js');
@@ -26,4 +27,5 @@ module.exports = {
 	MDNotebook,
 	CPPNotebook,
 	YMLNotebook,
+	Nodebook
 };
