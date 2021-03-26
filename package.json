@@ -1,6 +1,6 @@
 {
   "name": "nodejs-notebook",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Note down or jot down anything in any editable file.",
   "main": "index.js",
   "keywords": [
