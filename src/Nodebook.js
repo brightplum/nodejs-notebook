@@ -60,7 +60,7 @@ class Nodebook {
 		const name = Nodebook.prototype.name;
 		const filename = name.replace(/[ ]/g, '_');
 
-		if (!fs.existsSync(`${filename}.${type}`)) throw new NodebookError(`"${file}" does not exist.`);
+		if (!fs.existsSync(`${filename}.${type}`)) throw new NodebookError(`"${filename}.${type}" does not exist.`);
 
 		const data = fs.readFileSync(`${filename}.${type}`, { encoding: 'utf-8' }).split('\n');
 		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Fetched Line "${num}" In File "${filename}.${type}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
@@ -73,7 +73,7 @@ class Nodebook {
 		const name = Nodebook.prototype.name;
 		const filename = name.replace(/[ ]/g, '_');
 
-		if (!fs.existsSync(`${filename}.${type}`)) throw new NodebookError(`"${file}" does not exist.`);
+		if (!fs.existsSync(`${filename}.${type}`)) throw new NodebookError(`"${filename}.${type}" does not exist.`);
 
 		const text = fs.readFileSync(`${filename}.${type}`).toString().split('\n');
 		text[arrayNum] = '';
@@ -88,7 +88,7 @@ class Nodebook {
 		const name = Nodebook.prototype.name;
 		const filename = name.replace(/[ ]/g, '_');
 
-		if (!fs.existsSync(`${filename}.${type}`)) throw new NodebookError(`"${file}" does not exist.`);
+		if (!fs.existsSync(`${filename}.${type}`)) throw new NodebookError(`"${filename}.${type}" does not exist.`);
 
 		const text = fs.readFileSync(`${filename}.${type}`).toString().split('\n');
 		text[arrayNum] = key;

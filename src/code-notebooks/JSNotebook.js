@@ -17,7 +17,7 @@ class JSNotebook extends Nodebook {
 		const name = JSNotebook.prototype.name;
 		const filename = name.replace(/[ ]/g, '_');
 		const file = `${filename}.js`;
-		fs.writeFileSync(file, `${code}\n`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
+		fs.writeFileSync(file, `${code}`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Wrote File "${filename}.js"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 	}
 	run() {

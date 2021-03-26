@@ -23,8 +23,8 @@ class TXTNotebook extends Nodebook {
 		const name = TXTNotebook.prototype.name;
 		const filename = name.replace(/[ ]/g, '_');
 
-		options.flag = '';
 		const flag = options.flag;
+		if (!flag) flag = '';
 		const regex = new RegExp(value, flag);
 
 		let text = fs.readFileSync(`${filename}.txt`).toString();

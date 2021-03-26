@@ -1,3 +1,7 @@
+# Links
+[Discord](https://discord.gg/n5TpKjss52)
+[Documentation](https://nodebook.js.org)
+
 Nodebook is a module that you can use to edit, manage, and configure external files, like a **notebook**.
 
 ## Installation
@@ -106,6 +110,3 @@ Returns the file's content into a string.
 console.log(myNotebook.content());
 // should log the file's content
 ```
-
-## Documentation
-There are more customized classes for different types of files on the [Documentation](https://gamercoder215.gitbook.io/nodebook).
