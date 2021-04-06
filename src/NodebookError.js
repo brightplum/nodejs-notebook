@@ -3,9 +3,6 @@ class NodebookError extends Error {
 		super(message);
 		this.name = "NodebookError";
 	}
-	delete() {
-		
-	}
 }
 module.exports = {
 	NodebookError

@@ -1,31 +1,45 @@
 /*
 
-Nodebook (node-notebook) v1.0.0
+Nodebook (node-notebook) v1.0.3
 
 Created by GamerCoder215
 
 */
 
+// Default Classes
 const { NodebookError } = require('./src/NodebookError.js');
 const { Nodebook } = require('./src/Nodebook.js');
 
-const { JSONotebook } = require('./src/notebooks/JSONotebook.js');
-const { TXTNotebook } = require('./src/notebooks/TXTNotebook.js');
-const { MDNotebook } = require('./src/notebooks/MDNotebook.js');
-const { YMLNotebook } = require('./src/notebooks/YMLNotebook.js');
+// C/C++
+const { CPPNotebook } = require('./src/c-c++/CPPNotebook.js');
+const { CNotebook } = require('./src/c-c++/CNotebook.js');
 
-const { JSNotebook } = require('./src/code-notebooks/JSNotebook.js');
-const { BashNotebook } = require('./src/code-notebooks/BashNotebook.js');
-const { CPPNotebook } = require('./src/code-notebooks/CPPNotebook.js');
+// JS Notebooks
+const { JSNotebook } = require('./src/js/JSNotebook.js');
+const { JSONotebook } = require('./src/js/JSONotebook.js');
+
+// Text Notebooks
+const { TXTNotebook } = require('./src/text/TXTNotebook.js');
+const { MDNotebook } = require('./src/text/MDNotebook.js');
+
+// Other
+const { YMLNotebook } = require('./src/other/YMLNotebook.js');
+const { BashNotebook } = require('./src/other/BashNotebook.js');
 
 module.exports = {
-	JSONotebook,
+	// Default
+	Nodebook,
 	NodebookError,
-	TXTNotebook,
+	// JS
+	JSONotebook,
 	JSNotebook,
+	// Other
 	BashNotebook,
-	MDNotebook,
-	CPPNotebook,
 	YMLNotebook,
-	Nodebook
+	// Text
+	MDNotebook,
+	TXTNotebook,
+	// C/C++
+	CPPNotebook,
+	CNotebook
 };

@@ -1,5 +1,6 @@
 # Links
 [Discord](https://discord.gg/n5TpKjss52)
+
 [Documentation](https://nodebook.js.org)
 
 Nodebook is a module that you can use to edit, manage, and configure external files, like a **notebook**.
