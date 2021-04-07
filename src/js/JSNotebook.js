@@ -6,42 +6,62 @@ const { Nodebook } = require('../Nodebook.js');
 
 const undefinederror = new NodebookError('Your code cannot be undefined.');
 class JSNotebook extends Nodebook {
-	constructor(name) {
-		super(name, 'js');
+	constructor(name, type) {
+		if (!type) type = 'js';
+		super(name, type);
 		this.name = name;
+		this.type = type;
 
 		JSNotebook.prototype.name = name;
+		JSNotebook.prototype.type = type;
 	}
 	note(code) {
 		if (!code) throw undefinederror;
 		const name = JSNotebook.prototype.name;
+		const type = JSNotebook.prototype.type;
 		const filename = name.replace(/[ ]/g, '_');
-		const file = `${filename}.js`;
+		const file = `${filename}.${type}`;
 		fs.writeFileSync(file, `${code}`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
-		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Wrote File "${filename}.js"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
+		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Wrote File "${filename}.${type}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 	}
 	run() {
-		const file = `${JSNotebook.prototype.name.replace(/[ ]/g, '_')}.js`;
+		const type = JSNotebook.prototype.type;
+		const file = `${JSNotebook.prototype.name.replace(/[ ]/g, '_')}.${type}`;
 		const filename = JSNotebook.prototype.name.replace(/[ ]/g, '_');
 		if (!fs.existsSync(`${file}`)) throw new NodebookError(`"${file}" does not exist.`);
 		console.log(`[Nodebook] Executing File "${file}" ...`);
-		const output = child.exec(`node ${file}`, { encoding: 'utf-8' }, (err, stdout, stderr) => {
-			if (err !== null) {
-				console.error(err);
-			}
-			console.log(`STDOUT: ${stdout}`);
-			console.log(`STDERR: ${stderr}`);
-		});
-		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Executed File "${filename}.js"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
+		let output;
+		if (type == 'js') {
+			output = child.exec(`node ${file}`, { encoding: 'utf-8' }, (err, stdout, stderr) => {
+				if (err !== null) {
+					console.error(err);
+				} else {
+					console.log(`STDOUT: ${stdout}`);
+					console.log(`STDERR: ${stderr}`);
+				}
+			});
+		} else if (type == 'ts') {
+			output = child.exec(`tsc ${file}`, { encoding: 'utf-8' }, (err, stdout, stderr) => {
+				if (err !== null) {
+					console.error(err);
+				} else {
+					console.log(`STDOUT: ${stdout}`);
+					console.log(`STDERR: ${stderr}`);
+				}
+			});
+		} else output = 404;
+		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Executed File "${filename}.${type}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 		return output;
 	}
 	comment(comment) {
 		if (!comment) throw new NodebookError('comment() requires a comment to place.');
-		const file = `${JSNotebook.prototype.name.replace(/[ ]/g, '_')}.js`;
+		const type = JSNotebook.prototype.type;
+		const file = `${JSNotebook.prototype.name.replace(/[ ]/g, '_')}.${type}`;
 		fs.writeFileSync(file, `/* ${comment} */`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Commented In File "${file}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 	}
-	req(varname, module) {
+	req(varname, module, usets) {
+		const type = JSNotebook.prototype.type;
 		let err = new NodebookError('Please provide a variable name.');
 
 		if (!varname) throw err;
@@ -50,7 +70,7 @@ class JSNotebook extends Nodebook {
 
 		if (!module) throw err;
 
-		const file = `${JSNotebook.prototype.name.replace(/[ ]/g, '_')}.js`;
+		const file = `${JSNotebook.prototype.name.replace(/[ ]/g, '_')}.${type}`;
 
 		if (!fs.existsSync(file)) {
 			fs.writeFileSync(file, '\n', { encoding: 'utf-8'});
@@ -59,11 +79,21 @@ class JSNotebook extends Nodebook {
 		
 		let oldline = lines[0];
 
-		lines[0] = `const ${varname} = require('${module}')\n${oldline}`;
-		
+		if (type == 'js') {
+			lines[0] = `const ${varname} = require('${module}');\n${oldline}`;	
+		} else if (type == 'ts') {
+			if (!usets) usets = false;
+			if (importwhole == true) {
+				lines[0] = `import * as ${varname} from "${module}";\n${oldline}`;
+			} else {
+				lines[0] = `const ${varname} = require('${module}');\n${oldline}`;
+			};
+		}
 		fs.writeFileSync(file, lines.join('\n'), { encoding: 'utf-8'});
+		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Added Module "${module}" In File "${file}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 	}
 }
+
 module.exports = {
 	JSNotebook,
 };

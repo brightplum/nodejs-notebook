@@ -13,10 +13,18 @@ const { Nodebook } = require('./src/Nodebook.js');
 // C/C++
 const { CPPNotebook } = require('./src/c-c++/CPPNotebook.js');
 const { CNotebook } = require('./src/c-c++/CNotebook.js');
+const { HeaderNotebook } = require('./src/c-c++/HeaderNotebook.js');
+
+// Web
+const { HTMLNotebook } = require('./src/web/HTMLNotebook.js');
+
+// Java
+const { JavaNotebook } = require('./src/java/JavaNotebook.js');
 
 // JS Notebooks
 const { JSNotebook } = require('./src/js/JSNotebook.js');
 const { JSONotebook } = require('./src/js/JSONotebook.js');
+const { TSNotebook } = require('./src/js/TSNotebook.js');
 
 // Text Notebooks
 const { TXTNotebook } = require('./src/text/TXTNotebook.js');
@@ -30,9 +38,12 @@ module.exports = {
 	// Default
 	Nodebook,
 	NodebookError,
+	// Java
+	JavaNotebook,
 	// JS
 	JSONotebook,
 	JSNotebook,
+	TSNotebook,
 	// Other
 	BashNotebook,
 	YMLNotebook,
@@ -41,5 +52,8 @@ module.exports = {
 	TXTNotebook,
 	// C/C++
 	CPPNotebook,
-	CNotebook
+	CNotebook,
+	HeaderNotebook,
+	// Web
+	HTMLNotebook
 };

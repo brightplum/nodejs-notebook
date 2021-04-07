@@ -1,3 +1,8 @@
+# nodejs-notebook
+[![npm version](https://badge.fury.io/js/nodejs-notebook.svg)](https://badge.fury.io/js/nodejs-notebook)
+[![downloads](https://img.shields.io/npm/dw/nodejs-notebook.svg)](https://npmjs.com/package/nodejs-notebook)
+> Automate editing and managing any file type in the world
+
 # Links
 [Discord](https://discord.gg/n5TpKjss52)
 

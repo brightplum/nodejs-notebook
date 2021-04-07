@@ -24,7 +24,9 @@
     "fs": "0.0.1-security",
     "js-yaml": "^4.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "express": "^4.17.1"
+  },
   "scripts": {
     "test": "node test.js"
   },
