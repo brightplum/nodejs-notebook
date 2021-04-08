@@ -1,5 +1,5 @@
 # nodejs-notebook
-[![npm version](https://badge.fury.io/js/nodejs-notebook.svg)](https://badge.fury.io/js/nodejs-notebook)
+[![npm version](https://img.shields.io/npm/v/nodejs-notebook.svg)](https://npmjs.com/package/nodejs-notebook)
 [![downloads](https://img.shields.io/npm/dw/nodejs-notebook.svg)](https://npmjs.com/package/nodejs-notebook)
 [![GitHub](https://img.shields.io/github/license/gamercoder215/nodejs-notebook.svg)](https://github.com/GamerCoder215/nodejs-notebook)
 [![GitHub last commit](https://img.shields.io/github/last-commit/gamercoder215/nodejs-notebook.svg)](https://github.com/GamerCoder215/nodejs-notebook/commit/master)
