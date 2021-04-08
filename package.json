@@ -32,7 +32,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/GamerCoder215/node-notebook.git"
+    "url": "git+github.com/GamerCoder215/node-notebook.git"
   },
   "bugs": {
     "url": "https://github.com/GamerCoder215/node-notebook/issues"
