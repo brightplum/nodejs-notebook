@@ -1,7 +1,7 @@
 {
   "name": "nodejs-notebook",
-  "version": "1.0.3",
-  "description": "Note down or jot down anything in any editable file.",
+  "version": "1.1.0",
+  "description": "Note down or jot down anything in any editable file in the world.",
   "main": "index.js",
   "keywords": [
     "storage",
@@ -27,9 +27,12 @@
   "scripts": {
     "test": "node test.js"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GamerCoder215/node-notebook.git"
+    "url": "git://github.com/GamerCoder215/node-notebook.git"
   },
   "bugs": {
     "url": "https://github.com/GamerCoder215/node-notebook/issues"
