@@ -5,9 +5,10 @@ const { NodebookError } = require('../NodebookError.js');
 const { Nodebook } = require('../Nodebook.js');
 
 let undefinederror = new NodebookError(`"code" must be defined.`);
-let err;
+let err = new NodebookError('"name" cannot be undefined.');
 class JavaNotebook extends Nodebook {
 	constructor(name) {
+		if (!name) throw err;
 		const caps = name.charAt(0).toUpperCase() + name.slice(1);
 		super(caps, 'java');
 		if (caps !== name) console.log('\x1b[34m[Nodebook] INFO Java Classes are recommended to be capitalized. Auto-Capitalizing...\x1b[0m');

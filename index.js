@@ -15,9 +15,6 @@ const { CPPNotebook } = require('./src/c-c++/CPPNotebook.js');
 const { CNotebook } = require('./src/c-c++/CNotebook.js');
 const { HeaderNotebook } = require('./src/c-c++/HeaderNotebook.js');
 
-// Web
-const { HTMLNotebook } = require('./src/web/HTMLNotebook.js');
-
 // Java
 const { JavaNotebook } = require('./src/java/JavaNotebook.js');
 
@@ -54,6 +51,4 @@ module.exports = {
 	CPPNotebook,
 	CNotebook,
 	HeaderNotebook,
-	// Web
-	HTMLNotebook
 };

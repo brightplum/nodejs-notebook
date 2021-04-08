@@ -5,8 +5,10 @@ const { NodebookError } = require('../NodebookError.js');
 const { Nodebook } = require('../Nodebook.js');
 
 const undefinederror = new NodebookError('\'code\' must be defined.');
+let err = new NodebookError('"name" cannot be undefined.');
 class CNotebook extends Nodebook {
 	constructor(name) {
+		if (!name) throw err;
 		super(name, 'c');
 		this.name = name;
 		CNotebook.prototype.name = name;
@@ -40,6 +42,22 @@ class CNotebook extends Nodebook {
 			console.log(`STDERR: ${stderr}`);
 		});
 		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Compiled File "${filename}.c"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
+	}
+	include(module) {
+		let err = new NodebookError('Please provide a module name.');
+		if (!module) throw err;
+		const name = CNotebook.prototype.name;
+		const filename = name.replace(/[ ]/g, '_');
+		const file = `${filename}.c`;
+
+		if (!fs.existsSync(file)) {
+			fs.writeFileSync(file, `\n`, { encoding: 'utf-8'});
+		}
+		let lines = fs.readFileSync(file, { encoding: 'utf-8'}).split('\n');
+
+		let oldline = lines[0];
+		lines[0] = `#include <${module}>\n${oldline}`;
+		fs.writeFileSync(file, lines.join('\n'), { encoding: 'utf-8'});
 	}
 }
 module.exports = {

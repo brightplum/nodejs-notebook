@@ -1,14 +1,16 @@
 const fs = require('fs');
-const child = require('child_process');
 
 const { NodebookError } = require('../NodebookError.js');
 const { Nodebook } = require('../Nodebook.js');
 
+let err = new NodebookError('"name" cannot be undefined.');
 class HeaderNotebook extends Nodebook {
 	constructor(name, lang) {
-		let type = 'c';
+		if (!name) throw err;
+		let type;
 		if (lang == 'c') type = 'h';
 		else if (lang == 'c++') type = 'hpp';
+		else type = 'h';
 
 		super(name, type);
 		this.name = name;
@@ -34,4 +36,7 @@ class HeaderNotebook extends Nodebook {
 		lines[0] = `#include <${module}>\n${oldline}`;
 		fs.writeFileSync(file, lines.join('\n'), { encoding: 'utf-8'});
 	}
+}
+module.exports = {
+	HeaderNotebook
 }

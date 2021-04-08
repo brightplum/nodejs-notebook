@@ -6,9 +6,9 @@ const { Nodebook } = require('../Nodebook.js');
 
 class JSONotebook extends Nodebook {
 	constructor(name) {
-		super(name, 'json');
 		if (typeof name !== 'string') throw new NodebookError('Nodebook names must be strings.');
 		if (!name) throw new NodebookError('Please provide a nodebook name.');
+		super(name, 'json');
 		this.name = name;
 		JSONotebook.prototype.name = name;
 	}
