@@ -27,9 +27,6 @@
   "scripts": {
     "test": "node test.js"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "repository": {
     "type": "git",
     "url": "git+github.com/GamerCoder215/node-notebook.git"
