@@ -11,8 +11,6 @@
 
 [Documentation](https://nodebook.js.org)
 
-Nodebook is a module that you can use to edit, manage, and configure external files, like a **notebook**.
-
 ## Installation
 
 ```yml
@@ -52,7 +50,7 @@ myNotebook.clearLog();
 Resets the file.
 
 ```js
-myNotebook.resetFile();
+Nodebook.resetFile();
 // resets file_name.txt
 ```
 #### deleteFile(delay)

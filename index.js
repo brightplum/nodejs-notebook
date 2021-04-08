@@ -1,10 +1,11 @@
 /*
 
-Nodebook (node-notebook) v1.0.3
+Nodebook (nodejs-notebook) v1.0.3
 
 Created by GamerCoder215
 
 */
+const fs = require('fs');
 
 // Default Classes
 const { NodebookError } = require('./src/NodebookError.js');
@@ -26,12 +27,20 @@ const { TSNotebook } = require('./src/js/TSNotebook.js');
 // Text Notebooks
 const { TXTNotebook } = require('./src/text/TXTNotebook.js');
 const { MDNotebook } = require('./src/text/MDNotebook.js');
+const { PlainNotebook } = require('./src/text/PlainNotebook.js');
 
 // Other
 const { YMLNotebook } = require('./src/other/YMLNotebook.js');
 const { BashNotebook } = require('./src/other/BashNotebook.js');
 
+function clearLog() {
+		console.log('[Nodebook] Clearing ".booklog.txt" ...');
+		fs.unlinkSync('.booklog.txt');
+		fs.writeFileSync('.booklog.txt', `# Beginning of Nodebook Log\n[Nodebook  ${Date.now()}] - Reset Logs`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
+}
 module.exports = {
+	// Functions
+	clearLog,
 	// Default
 	Nodebook,
 	NodebookError,
@@ -47,6 +56,7 @@ module.exports = {
 	// Text
 	MDNotebook,
 	TXTNotebook,
+	PlainNotebook,
 	// C/C++
 	CPPNotebook,
 	CNotebook,

@@ -2,10 +2,9 @@ const fs = require('fs');
 
 const { NodebookError } = require('./NodebookError.js');
 
-const optionsErr = new TypeError('\'options\' must be an object.');
-const integerErr = new TypeError('\'num\' must be a valid integer.');
-const undefiendErr = new TypeError('\'key\' must be defined.');
-
+const optionsErr = new TypeError('"options" must be an object.');
+const integerErr = new TypeError('"num" must be a valid integer.');
+const undefiendErr = new TypeError('"key" must be defined.');
 class Nodebook {
 	constructor(name, type) {
 		this.name = name;
@@ -20,11 +19,6 @@ class Nodebook {
 		options.lower == false;
 		if (options.lower == true) filename = filename.toLowerCase();
 		return filename;
-	}
-	clearLog() {
-		console.log('[Nodebook] Clearing ".booklog.txt" ...');
-		fs.unlinkSync('.booklog.txt');
-		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Reset Logs`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 	}
 	resetFile() {
 		const type = Nodebook.prototype.type;
