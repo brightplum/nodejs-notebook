@@ -19,6 +19,11 @@ const { HeaderNotebook } = require('./src/c-c++/HeaderNotebook.js');
 // Java
 const { JavaNotebook } = require('./src/java/JavaNotebook.js');
 
+// Web
+const { CSSNotebook } = require('./src/web/CSSNotebook.js');
+const { PHPNotebook } = require('./src/web/PHPNotebook.js');
+const { HTMLNotebook } = require('./src/web/HTMLNotebook.js');
+
 // JS Notebooks
 const { JSNotebook } = require('./src/js/JSNotebook.js');
 const { JSONotebook } = require('./src/js/JSONotebook.js');
@@ -34,9 +39,9 @@ const { YMLNotebook } = require('./src/other/YMLNotebook.js');
 const { BashNotebook } = require('./src/other/BashNotebook.js');
 
 function clearLog() {
-		console.log('[Nodebook] Clearing ".booklog.txt" ...');
-		fs.unlinkSync('.booklog.txt');
-		fs.writeFileSync('.booklog.txt', `# Beginning of Nodebook Log\n[Nodebook  ${Date.now()}] - Reset Logs`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
+	console.log('[Nodebook] Clearing ".booklog.txt" ...');
+	fs.unlinkSync('.booklog.txt');
+	fs.writeFileSync('.booklog.txt', `# Beginning of Nodebook Log\n[Nodebook  ${Date.now()}] - Reset Logs`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 }
 module.exports = {
 	// Functions
@@ -50,6 +55,10 @@ module.exports = {
 	JSONotebook,
 	JSNotebook,
 	TSNotebook,
+	// Web
+	CSSNotebook,
+	PHPNotebook,
+	HTMLNotebook,
 	// Other
 	BashNotebook,
 	YMLNotebook,

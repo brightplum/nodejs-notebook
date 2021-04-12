@@ -51,13 +51,13 @@ class CNotebook extends Nodebook {
 		const file = `${filename}.c`;
 
 		if (!fs.existsSync(file)) {
-			fs.writeFileSync(file, `\n`, { encoding: 'utf-8'});
+			fs.writeFileSync(file, '\n', { encoding: 'utf-8' });
 		}
-		let lines = fs.readFileSync(file, { encoding: 'utf-8'}).split('\n');
+		let lines = fs.readFileSync(file, { encoding: 'utf-8' }).split('\n');
 
 		let oldline = lines[0];
 		lines[0] = `#include <${module}>\n${oldline}`;
-		fs.writeFileSync(file, lines.join('\n'), { encoding: 'utf-8'});
+		fs.writeFileSync(file, lines.join('\n'), { encoding: 'utf-8' });
 	}
 }
 module.exports = {
