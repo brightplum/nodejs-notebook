@@ -34,10 +34,12 @@ const { YMLNotebook } = require('./src/other/YMLNotebook.js');
 const { BashNotebook } = require('./src/other/BashNotebook.js');
 
 function clearLog() {
-		console.log('[Nodebook] Clearing ".booklog.txt" ...');
-		fs.unlinkSync('.booklog.txt');
-		fs.writeFileSync('.booklog.txt', `# Beginning of Nodebook Log\n[Nodebook  ${Date.now()}] - Reset Logs`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
+	console.log('[Nodebook] Clearing ".booklog.txt" ...');
+	fs.unlinkSync('.booklog.txt');
+	fs.writeFileSync('.booklog.txt', `# Beginning of Nodebook Log\n[Nodebook  ${Date.now()}] - Reset Logs`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 }
+
+
 module.exports = {
 	// Functions
 	clearLog,

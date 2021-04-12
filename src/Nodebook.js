@@ -5,12 +5,12 @@ const { NodebookError } = require('./NodebookError.js');
 const optionsErr = new TypeError('"options" must be an object.');
 const integerErr = new TypeError('"num" must be a valid integer.');
 const undefiendErr = new TypeError('"key" must be defined.');
+let stringErr = new Typeerror('"options.newname" must be a string.');
+
 class Nodebook {
 	constructor(name, type) {
 		this.name = name;
 		this.type = type;
-		Nodebook.prototype.name = name;
-		Nodebook.prototype.type = type;
 		if (!fs.existsSync('.booklog.txt')) fs.writeFileSync('.booklog.txt', '# Beginning of Nodebook Log');
 	}
 	fileName(options) {
@@ -21,8 +21,8 @@ class Nodebook {
 		return filename;
 	}
 	resetFile() {
-		const type = Nodebook.prototype.type;
-		const file = `${Nodebook.prototype.name.replace(/[ ]/g, '_')}.${type}`;
+		const type = this.type;
+		const file = `${this.name.replace(/[ ]/g, '_')}.${type}`;
 		if (!fs.existsSync(`${file}`)) throw new NodebookError(`"${file}" does not exist.`);
 
 		console.log(`[Nodebook] Resetting file "${file}"...`);
@@ -31,8 +31,8 @@ class Nodebook {
 		fs.writeFileSync(file, '');
 	}
 	deleteFile(delay) {
-		const type = Nodebook.prototype.type;
-		const name = Nodebook.prototype.name;
+		const type = this.type;
+		const name = this.name;
 		const filename = name.replace(/[ ]/g, '_');
 		if (!fs.existsSync(`${filename}.${type}`)) throw new NodebookError(`"${filename}.${type}" does not exist.`);
 		if (!delay) {
@@ -50,8 +50,8 @@ class Nodebook {
 	fetchLine(num) {
 		if (!num || (num * 1) % 1 !== 0 || isNaN(num * 1)) throw integerErr;
 		const arrayNum = (num * 1) - 1;
-		const type = Nodebook.prototype.type;
-		const name = Nodebook.prototype.name;
+		const type = this.type;
+		const name = this.name;
 		const filename = name.replace(/[ ]/g, '_');
 
 		if (!fs.existsSync(`${filename}.${type}`)) throw new NodebookError(`"${filename}.${type}" does not exist.`);
@@ -63,8 +63,8 @@ class Nodebook {
 	deleteLine(num) {
 		if (!num || (num * 1) % 1 !== 0 || isNaN(num * 1)) throw integerErr;
 		const arrayNum = (num * 1) - 1;
-		const type = Nodebook.prototype.type;
-		const name = Nodebook.prototype.name;
+		const type = this.type;
+		const name = this.name;
 		const filename = name.replace(/[ ]/g, '_');
 
 		if (!fs.existsSync(`${filename}.${type}`)) throw new NodebookError(`"${filename}.${type}" does not exist.`);
@@ -78,8 +78,8 @@ class Nodebook {
 		if (!num || (num * 1) % 1 !== 0 || isNaN(num * 1)) throw integerErr;
 		if (!key) throw undefinedErr;
 		const arrayNum = (num * 1) - 1;
-		const type = Nodebook.prototype.type;
-		const name = Nodebook.prototype.name;
+		const type = this.type;
+		const name = this.name;
 		const filename = name.replace(/[ ]/g, '_');
 
 		if (!fs.existsSync(`${filename}.${type}`)) throw new NodebookError(`"${filename}.${type}" does not exist.`);
@@ -90,21 +90,61 @@ class Nodebook {
 		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Edited Line "${num}" In File "${filename}.${type}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 	}
 	addLine(key) {
-		const type = Nodebook.prototype.type;
-		const name = Nodebook.prototype.name;
+		const type = this.type;
+		const name = this.name;
 		const filename = name.replace(/[ ]/g, '_');
 		if (!key) throw undefiendErr;
 
 		fs.writeFileSync(`${filename}.${type}`, `${key}\n`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Added Line in File "${filename}.${type}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 	}
-	content() {
-		const type = Nodebook.prototype.type;
-		const name = Nodebook.prototype.name;
+	content(encoding) {
+		let encode = 'utf-8';
+		if (encoding) encode = encoding.toString();
+
+		const type = this.type;
+		const name = this.name;
 		const filename = name.replace(/[ ]/g, '_');
 
-		return fs.readFileSync(`${filename}.${type}`, { encoding: 'utf-8' }).toString();
+		if (encode == 'utf-8') {
+			return fs.readFileSync(`${filename}.${type}`, { encoding: 'utf-8' }).toString();
+		} else {
+			return fs.readFileSync(`${filename}.${type}`, { encoding: encode }).toString();
+		}
 	}
+	lines(encoding) {
+		let encode = 'utf-8';
+		if (encoding) encode = encoding.toString();
+
+		const type = this.type;
+		const name = this.name;
+		const filename = name.replace(/[ ]/g, '_');
+
+		if (encode == 'utf-8') {
+			return fs.readFileSync(`${filename}.${type}`, { encoding: 'utf-8'}).split('\n');
+		} else {
+			return fs.readFileSync(`${filename}.${type}`, { encoding: encode }).split('\n');
+		}
+	}
+	duplicate(options) {
+		if (options && typeof options !== 'object' || Array.isArray(options)) throw optionsErr;
+
+		let newFileName = `${this.name}_duplicate`;
+		let encode = `utf-8`;
+
+		let type = this.type;
+
+		if (typeof options.newname !== 'string') throw stringErr;
+
+		let stringErr = new TypeError('"options.encoding" must be a string.');
+		if (options.newname) newFileName = options.newname;
+		if (options.encoding) encode = options.encoding;
+
+		fs.writeFileSync(`${newFileName}.${type}`, fs.readFileSync(`${this.name}.${type}`).toString(), { encoding: encode });
+
+		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Duplicated File "${this.name}.${type}" as "${newFileName}.${type}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
+	}
+	
 }
 module.exports = {
 	Nodebook,

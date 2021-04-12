@@ -10,12 +10,11 @@ class JSONotebook extends Nodebook {
 		if (!name) throw new NodebookError('Please provide a nodebook name.');
 		super(name, 'json');
 		this.name = name;
-		JSONotebook.prototype.name = name;
 	}
 	note(key, value) {
 		if (!key) throw new NodebookError('note() key cannot be undefiend.');
 		if (!value) throw new NodebookError('note() value cannot be undefined.');
-		const name = JSONotebook.prototype.name;
+		const name = this.name;
 
 		const filename = name.replace(/[ ]/g, '_');
 		if (!fs.existsSync(`${filename}.json`)) {
@@ -35,7 +34,7 @@ class JSONotebook extends Nodebook {
 	}
 	push(key, newkey) {
 		if (!newkey) throw new NodebookError('note() key cannot be undefiend.');
-		const name = JSONotebook.prototype.name;
+		const name = this.name;
 		const filename = name.replace(/[ ]/g, '_');
 		if (!fs.existsSync(`${filename}.json`)) throw new NodebookError(`"${filename}.json" does not exist.`);
 
@@ -48,7 +47,7 @@ class JSONotebook extends Nodebook {
 		fs.writeFileSync(`${filename}.json`, JSON.stringify(file));
 	}
 	fetch(key) {
-		const name = JSONotebook.prototype.name;
+		const name = this.name;
 		const filename = name.replace(/[ ]/g, '_');
 		if (!fs.existsSync(`${filename}.json`)) throw new NodebookError(`"${filename}.json" does not exist.`);
 
@@ -58,7 +57,7 @@ class JSONotebook extends Nodebook {
 	}
 	erase(key) {
 		if (!key) throw new NodebookError('erase() must provide a key.');
-		const name = JSONotebook.prototype.name;
+		const name = this.name;
 		const filename = name.replace(/[ ]/g, '_');
 		if (!fs.existsSync(`${filename}.json`)) throw new NodebookError(`"${filename}.json" does not exist.`);
 
@@ -68,7 +67,7 @@ class JSONotebook extends Nodebook {
 		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Erased Key "${key}" In File "${filename}.json"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 	}
 	toYML() {
-		const name = JSONotebook.prototype.name;
+		const name = this.name;
 		const filename = name.replace(/[ ]/g, '_');
 		const content = require(`../${filename}.json`);
 

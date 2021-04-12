@@ -15,9 +15,8 @@ class TSNotebook extends JSNotebook {
 		super(name, 'ts');
 
 		this.name = name;
-
-		TSNotebook.prototype.name = name;
 	}
+	
 }
 
 module.exports = {

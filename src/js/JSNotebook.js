@@ -11,23 +11,20 @@ class JSNotebook extends Nodebook {
 		super(name, type);
 		this.name = name;
 		this.type = type;
-
-		JSNotebook.prototype.name = name;
-		JSNotebook.prototype.type = type;
 	}
 	note(code) {
 		if (!code) throw undefinederror;
-		const name = JSNotebook.prototype.name;
-		const type = JSNotebook.prototype.type;
+		const name = this.name;
+		const type = this.type;
 		const filename = name.replace(/[ ]/g, '_');
 		const file = `${filename}.${type}`;
 		fs.writeFileSync(file, `${code}`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Wrote File "${filename}.${type}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 	}
 	run() {
-		const type = JSNotebook.prototype.type;
-		const file = `${JSNotebook.prototype.name.replace(/[ ]/g, '_')}.${type}`;
-		const filename = JSNotebook.prototype.name.replace(/[ ]/g, '_');
+		const type = this.type;
+		const file = `${this.name.replace(/[ ]/g, '_')}.${type}`;
+		const filename = this.name.replace(/[ ]/g, '_');
 		if (!fs.existsSync(`${file}`)) throw new NodebookError(`"${file}" does not exist.`);
 		console.log(`[Nodebook] Executing File "${file}" ...`);
 		let output;
@@ -55,13 +52,13 @@ class JSNotebook extends Nodebook {
 	}
 	comment(comment) {
 		if (!comment) throw new NodebookError('comment() requires a comment to place.');
-		const type = JSNotebook.prototype.type;
-		const file = `${JSNotebook.prototype.name.replace(/[ ]/g, '_')}.${type}`;
+		const type = this.type;
+		const file = `${this.name.replace(/[ ]/g, '_')}.${type}`;
 		fs.writeFileSync(file, `/* ${comment} */`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Commented In File "${file}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 	}
 	req(varname, module, usets) {
-		const type = JSNotebook.prototype.type;
+		const type = this.type;
 		let err = new NodebookError('Please provide a variable name.');
 
 		if (!varname) throw err;
@@ -70,7 +67,7 @@ class JSNotebook extends Nodebook {
 
 		if (!module) throw err;
 
-		const file = `${JSNotebook.prototype.name.replace(/[ ]/g, '_')}.${type}`;
+		const file = `${this.name.replace(/[ ]/g, '_')}.${type}`;
 
 		if (!fs.existsSync(file)) {
 			fs.writeFileSync(file, '\n', { encoding: 'utf-8'});
