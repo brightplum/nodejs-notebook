@@ -4,7 +4,7 @@ const child = require('child_process');
 const { NodebookError } = require('../NodebookError.js');
 const { Nodebook } = require('../Nodebook.js');
 
-let undefinederror = new NodebookError(`"code" must be defined.`);
+let undefinederror = new NodebookError('"code" must be defined.');
 let err = new NodebookError('"name" cannot be undefined.');
 class JavaNotebook extends Nodebook {
 	constructor(name) {
@@ -28,16 +28,16 @@ class JavaNotebook extends Nodebook {
 	req(pkg) {
 		err = new NodebookError('Please provide a package.');
 		if (!pkg) throw err;
-		
+
 		const name = JavaNotebook.prototype.name;
 		const filename = name.replace(/[ ]/g, '_');
 		const file = `${filename}.java`;
 
 		if (!fs.existsSync(file)) {
-			fs.writeFileSync(file, '\n', { encoding: 'utf-8'});
+			fs.writeFileSync(file, '\n', { encoding: 'utf-8' });
 		}
-		let lines = fs.readFileSync(file, { encoding: 'utf-8'}).split('\n');
-		
+		let lines = fs.readFileSync(file, { encoding: 'utf-8' }).split('\n');
+
 		let oldline = lines[0];
 
 		lines[0] = `import ${pkg};\n${oldline}`;
@@ -52,14 +52,15 @@ class JavaNotebook extends Nodebook {
 		err = new NodebookError(`"${file}" does not exist.`);
 		if (!fs.existsSync(file)) throw err;
 
-		child.exec(`javac ${file}`, { encoding: 'utf-8'}, (err, stdout, stderr) => {
+		child.exec(`javac ${file}`, { encoding: 'utf-8' }, (err, stdout, stderr) => {
 			if (err !== null) {
 				console.error(err);
-			} else {
+			}
+			else {
 				console.log(`STDOUT: ${stdout}`);
 				console.log(`STDERR: ${stderr}`);
 			}
-		})
+		});
 		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Compiled File "${file}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 	}
 	comment(comment) {
@@ -76,26 +77,28 @@ class JavaNotebook extends Nodebook {
 		err = new NodebookError(`"${file}" does not exist.`);
 		if (!fs.existsSync(file)) throw err;
 
-		child.exec(`javac ${file}`, { encoding: 'utf-8'}, (err, stdout, stderr) => {
+		child.exec(`javac ${file}`, { encoding: 'utf-8' }, (err, stdout, stderr) => {
 			if (err !== null) {
 				console.error(`(compile) ${err}`);
-			} else {
+			}
+			else {
 				console.log(`(compile) STDOUT: ${stdout}`);
 				console.log(`(compile) STDERR: ${stderr}`);
 			}
 		}).then(() => {
-			child.exec(`java ${filename}`, { encoding: 'utf-8'}, (err, stdout, stderr) => {
+			child.exec(`java ${filename}`, { encoding: 'utf-8' }, (err, stdout, stderr) => {
 				if (err !== null) {
 					console.error(err);
-				} else {
+				}
+				else {
 					console.log(`STDOUT: ${stdout}`);
 					console.log(`STDERR: ${stderr}`);
 				}
-		})
-		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Executed File "${file}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
-		})
+			});
+			fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Executed File "${file}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
+		});
 	}
 }
 module.exports = {
-	JavaNotebook
-}
+	JavaNotebook,
+};

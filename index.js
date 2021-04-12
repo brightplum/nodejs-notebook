@@ -19,6 +19,11 @@ const { HeaderNotebook } = require('./src/c-c++/HeaderNotebook.js');
 // Java
 const { JavaNotebook } = require('./src/java/JavaNotebook.js');
 
+// Web
+const { CSSNotebook } = require('./src/web/CSSNotebook.js');
+const { PHPNotebook } = require('./src/web/PHPNotebook.js');
+const { HTMLNotebook } = require('./src/web/HTMLNotebook.js');
+
 // JS Notebooks
 const { JSNotebook } = require('./src/js/JSNotebook.js');
 const { JSONotebook } = require('./src/js/JSONotebook.js');
@@ -52,6 +57,10 @@ module.exports = {
 	JSONotebook,
 	JSNotebook,
 	TSNotebook,
+	// Web
+	CSSNotebook,
+	PHPNotebook,
+	HTMLNotebook,
 	// Other
 	BashNotebook,
 	YMLNotebook,

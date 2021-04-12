@@ -43,7 +43,7 @@ class PlainNotebook {
 	fetchLine(num) {
 		if (!num || (num * 1) % 1 !== 0 || isNaN(num * 1)) throw integerErr;
 		const arrayNum = (num * 1) - 1;
-		
+
 		const name = PlainNotebook.prototype.name;
 		const filename = name.replace(/[ ]/g, '_');
 
@@ -97,4 +97,4 @@ class PlainNotebook {
 }
 module.exports = {
 	PlainNotebook
-}
+};

@@ -32,21 +32,25 @@ class JSNotebook extends Nodebook {
 			output = child.exec(`node ${file}`, { encoding: 'utf-8' }, (err, stdout, stderr) => {
 				if (err !== null) {
 					console.error(err);
-				} else {
+				}
+				else {
 					console.log(`STDOUT: ${stdout}`);
 					console.log(`STDERR: ${stderr}`);
 				}
 			});
-		} else if (type == 'ts') {
+		}
+		else if (type == 'ts') {
 			output = child.exec(`tsc ${file}`, { encoding: 'utf-8' }, (err, stdout, stderr) => {
 				if (err !== null) {
 					console.error(err);
-				} else {
+				}
+				else {
 					console.log(`STDOUT: ${stdout}`);
 					console.log(`STDERR: ${stderr}`);
 				}
 			});
-		} else output = 404;
+		}
+		else {output = 404;}
 		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Executed File "${filename}.${type}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 		return output;
 	}
@@ -70,23 +74,25 @@ class JSNotebook extends Nodebook {
 		const file = `${this.name.replace(/[ ]/g, '_')}.${type}`;
 
 		if (!fs.existsSync(file)) {
-			fs.writeFileSync(file, '\n', { encoding: 'utf-8'});
+			fs.writeFileSync(file, '\n', { encoding: 'utf-8' });
 		}
-		let lines = fs.readFileSync(file, { encoding: 'utf-8'}).split('\n');
-		
+		let lines = fs.readFileSync(file, { encoding: 'utf-8' }).split('\n');
+
 		let oldline = lines[0];
 
 		if (type == 'js') {
-			lines[0] = `const ${varname} = require('${module}');\n${oldline}`;	
-		} else if (type == 'ts') {
+			lines[0] = `const ${varname} = require('${module}');\n${oldline}`;
+		}
+		else if (type == 'ts') {
 			if (!usets) usets = false;
 			if (importwhole == true) {
 				lines[0] = `import * as ${varname} from "${module}";\n${oldline}`;
-			} else {
+			}
+			else {
 				lines[0] = `const ${varname} = require('${module}');\n${oldline}`;
 			};
 		}
-		fs.writeFileSync(file, lines.join('\n'), { encoding: 'utf-8'});
+		fs.writeFileSync(file, lines.join('\n'), { encoding: 'utf-8' });
 		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Added Module "${module}" In File "${file}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 	}
 }
