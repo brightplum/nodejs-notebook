@@ -3,7 +3,7 @@ const fs = require('fs');
 const { NodebookError } = require('../NodebookError.js');
 const { Nodebook } = require('../Nodebook.js');
 
-let err = new NodebookError('"name" cannot be undefined.');
+const err = new NodebookError('"name" cannot be undefined.');
 class HeaderNotebook extends Nodebook {
 	constructor(name, lang) {
 		if (!name) throw err;
@@ -20,7 +20,7 @@ class HeaderNotebook extends Nodebook {
 		HeaderNotebook.prototype.type = type;
 	}
 	include(module) {
-		let err = new NodebookError('Please provide a module name.');
+		const err = new NodebookError('Please provide a module name.');
 		if (!module) throw err;
 		const name = HeaderNotebook.prototype.name;
 		const type = HeaderNotebook.prototype.type;
@@ -28,15 +28,15 @@ class HeaderNotebook extends Nodebook {
 		const file = `${filename}.${type}`;
 
 		if (!fs.existsSync(file)) {
-			fs.writeFileSync(file, `\n`, { encoding: 'utf-8'});
+			fs.writeFileSync(file, '\n', { encoding: 'utf-8' });
 		}
-		let lines = fs.readFileSync(file, { encoding: 'utf-8'}).split('\n');
+		const lines = fs.readFileSync(file, { encoding: 'utf-8' }).split('\n');
 
-		let oldline = lines[0];
+		const oldline = lines[0];
 		lines[0] = `#include <${module}>\n${oldline}`;
-		fs.writeFileSync(file, lines.join('\n'), { encoding: 'utf-8'});
+		fs.writeFileSync(file, lines.join('\n'), { encoding: 'utf-8' });
 	}
 }
 module.exports = {
 	HeaderNotebook
-}
+};
