@@ -21,7 +21,7 @@ class JSNotebook extends Nodebook {
 		fs.writeFileSync(file, `${code}`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Wrote File "${filename}.${type}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 	}
-	run() {
+	runAsNode() {
 		const type = this.type;
 		const file = `${this.name.replace(/[ ]/g, '_')}.${type}`;
 		const filename = this.name.replace(/[ ]/g, '_');
@@ -61,7 +61,7 @@ class JSNotebook extends Nodebook {
 		fs.writeFileSync(file, `/* ${comment} */`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Commented In File "${file}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 	}
-	req(varname, module, usets) {
+	req(varname, module, usets, importwhole) {
 		const type = this.type;
 		let err = new NodebookError('Please provide a variable name.');
 
@@ -71,14 +71,20 @@ class JSNotebook extends Nodebook {
 
 		if (!module) throw err;
 
+		err = new NodebookError('"importwhole" must be a valid boolean.');
+
+		if (!importwhole) importwhole = false;
+
+		if (typeof importwhole !== 'boolean') throw err;
+
 		const file = `${this.name.replace(/[ ]/g, '_')}.${type}`;
 
 		if (!fs.existsSync(file)) {
 			fs.writeFileSync(file, '\n', { encoding: 'utf-8' });
 		}
-		let lines = fs.readFileSync(file, { encoding: 'utf-8' }).split('\n');
+		const lines = fs.readFileSync(file, { encoding: 'utf-8' }).split('\n');
 
-		let oldline = lines[0];
+		const oldline = lines[0];
 
 		if (type == 'js') {
 			lines[0] = `const ${varname} = require('${module}');\n${oldline}`;
@@ -90,7 +96,7 @@ class JSNotebook extends Nodebook {
 			}
 			else {
 				lines[0] = `const ${varname} = require('${module}');\n${oldline}`;
-			};
+			}
 		}
 		fs.writeFileSync(file, lines.join('\n'), { encoding: 'utf-8' });
 		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Added Module "${module}" In File "${file}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
