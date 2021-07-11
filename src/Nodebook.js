@@ -5,7 +5,7 @@ const { NodebookError } = require('./NodebookError.js');
 const optionsErr = new TypeError('"options" must be an object.');
 const integerErr = new TypeError('"num" must be a valid integer.');
 const undefiendErr = new TypeError('"key" must be defined.');
-let stringErr = new Typeerror('"options.newname" must be a string.');
+let stringErr = new TypeError('"options.newname" must be a string.');
 
 class Nodebook {
 	constructor(name, type) {
@@ -26,7 +26,7 @@ class Nodebook {
 		if (!fs.existsSync(`${file}`)) throw new NodebookError(`"${file}" does not exist.`);
 
 		console.log(`[Nodebook] Resetting file "${file}"...`);
-		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Reset File "${filename}.${type}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
+		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Reset File "${file}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 		fs.unlinkSync(file);
 		fs.writeFileSync(file, '');
 	}
@@ -76,7 +76,7 @@ class Nodebook {
 	}
 	editLine(num, key) {
 		if (!num || (num * 1) % 1 !== 0 || isNaN(num * 1)) throw integerErr;
-		if (!key) throw undefinedErr;
+		if (!key) throw undefiendErr;
 		const arrayNum = (num * 1) - 1;
 		const type = this.type;
 		const name = this.name;
@@ -108,7 +108,8 @@ class Nodebook {
 
 		if (encode == 'utf-8') {
 			return fs.readFileSync(`${filename}.${type}`, { encoding: 'utf-8' }).toString();
-		} else {
+		}
+		else {
 			return fs.readFileSync(`${filename}.${type}`, { encoding: encode }).toString();
 		}
 	}
@@ -121,8 +122,9 @@ class Nodebook {
 		const filename = name.replace(/[ ]/g, '_');
 
 		if (encode == 'utf-8') {
-			return fs.readFileSync(`${filename}.${type}`, { encoding: 'utf-8'}).split('\n');
-		} else {
+			return fs.readFileSync(`${filename}.${type}`, { encoding: 'utf-8' }).split('\n');
+		}
+		else {
 			return fs.readFileSync(`${filename}.${type}`, { encoding: encode }).split('\n');
 		}
 	}
@@ -130,13 +132,13 @@ class Nodebook {
 		if (options && typeof options !== 'object' || Array.isArray(options)) throw optionsErr;
 
 		let newFileName = `${this.name}_duplicate`;
-		let encode = `utf-8`;
+		let encode = 'utf-8';
 
-		let type = this.type;
+		const type = this.type;
 
 		if (typeof options.newname !== 'string') throw stringErr;
 
-		let stringErr = new TypeError('"options.encoding" must be a string.');
+		stringErr = new TypeError('"options.encoding" must be a string.');
 		if (options.newname) newFileName = options.newname;
 		if (options.encoding) encode = options.encoding;
 
@@ -144,7 +146,7 @@ class Nodebook {
 
 		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Duplicated File "${this.name}.${type}" as "${newFileName}.${type}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 	}
-	
+
 }
 module.exports = {
 	Nodebook,
