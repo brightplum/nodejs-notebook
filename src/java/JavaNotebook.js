@@ -4,7 +4,7 @@ const child = require('child_process');
 const { NodebookError } = require('../NodebookError.js');
 const { Nodebook } = require('../Nodebook.js');
 
-let undefinederror = new NodebookError('"code" must be defined.');
+const undefinederror = new NodebookError('"code" must be defined.');
 let err = new NodebookError('"name" cannot be undefined.');
 class JavaNotebook extends Nodebook {
 	constructor(name) {
@@ -25,7 +25,7 @@ class JavaNotebook extends Nodebook {
 		fs.writeFileSync(file, `${code}`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Wrote File "${filename}.java"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 	}
-	req(pkg) {
+	import(pkg) {
 		err = new NodebookError('Please provide a package.');
 		if (!pkg) throw err;
 
@@ -36,9 +36,9 @@ class JavaNotebook extends Nodebook {
 		if (!fs.existsSync(file)) {
 			fs.writeFileSync(file, '\n', { encoding: 'utf-8' });
 		}
-		let lines = fs.readFileSync(file, { encoding: 'utf-8' }).split('\n');
+		const lines = fs.readFileSync(file, { encoding: 'utf-8' }).split('\n');
 
-		let oldline = lines[0];
+		const oldline = lines[0];
 
 		lines[0] = `import ${pkg};\n${oldline}`;
 		fs.writeFileSync(file, lines.join('\n'), { encoding: 'utf-8' });
