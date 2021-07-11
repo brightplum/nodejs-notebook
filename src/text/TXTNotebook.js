@@ -23,7 +23,7 @@ class TXTNotebook extends Nodebook {
 		const name = TXTNotebook.prototype.name;
 		const filename = name.replace(/[ ]/g, '_');
 
-		const flag = options.flag;
+		let flag = options.flag;
 		if (!flag) flag = '';
 		const regex = new RegExp(value, flag);
 

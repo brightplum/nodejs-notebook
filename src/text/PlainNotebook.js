@@ -2,11 +2,12 @@ const fs = require('fs');
 
 const { NodebookError } = require('../NodebookError.js');
 
+const optionsErr = new TypeError('"options" must be an object.');
+const undefiendErr = new TypeError('"key" must be defined.');
+const integerErr = new TypeError('"num" must be a valid integer.');
 class PlainNotebook {
 	constructor(name) {
 		this.name = name;
-
-		PlainNotebook.prototype.name = name;
 	}
 	fileName(options) {
 		if (typeof options !== 'object') throw optionsErr;
@@ -16,16 +17,16 @@ class PlainNotebook {
 		return filename;
 	}
 	resetFile() {
-		const file = `${PlainNotebook.prototype.name.replace(/[ ]/g, '_')}`;
+		const file = `${this.name.replace(/[ ]/g, '_')}`;
 		if (!fs.existsSync(`${file}`)) throw new NodebookError(`"${file}" does not exist.`);
 
 		console.log(`[Nodebook] Resetting file "${file}"...`);
-		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Reset File "${filename}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
+		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Reset File "${file}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 		fs.unlinkSync(file);
 		fs.writeFileSync(file, '');
 	}
 	deleteFile(delay) {
-		const name = PlainNotebook.prototype.name;
+		const name = this.name;
 		const filename = name.replace(/[ ]/g, '_');
 		if (!fs.existsSync(`${filename}`)) throw new NodebookError(`"${filename}" does not exist.`);
 		if (!delay) {
@@ -68,7 +69,7 @@ class PlainNotebook {
 	}
 	editLine(num, key) {
 		if (!num || (num * 1) % 1 !== 0 || isNaN(num * 1)) throw integerErr;
-		if (!key) throw undefinedErr;
+		if (!key) throw undefiendErr;
 		const arrayNum = (num * 1) - 1;
 		const name = PlainNotebook.prototype.name;
 		const filename = name.replace(/[ ]/g, '_');
