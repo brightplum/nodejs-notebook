@@ -1,6 +1,6 @@
 {
   "name": "nodejs-notebook",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Note down or jot down anything in any editable file in the world.",
   "main": "index.js",
   "keywords": [
@@ -29,10 +29,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+github.com/GamerCoder215/node-notebook.git"
+    "url": "git+github.com/brightplum/nodejs-notebook.git"
   },
   "bugs": {
-    "url": "https://github.com/GamerCoder215/node-notebook/issues"
+    "url": "https://github.com/brightplum/nodejs-notebook/"
   },
-  "homepage": "https://github.com/GamerCoder215/node-notebook#readme"
+  "homepage": "https://github.com/brightplum/nodejs-notebook#readme"
 }
