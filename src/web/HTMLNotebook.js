@@ -17,7 +17,7 @@ class HTMLNotebook extends Nodebook {
 		this.type = realHtmlType;
 
 		if (!fs.existsSync(`${name}.${realHtmlType}`)) {
-			const htmlDefault = '<!DOCTYPE html>\n<html lang="en" dir="ltr">\n˘˘<head>\n˘˘˘˘<meta charset="utf-8">\n˘˘˘˘<title></title>\n˘˘</head>\n˘˘<body>\n˘˘</body>\n</html>'.replace(/[˘]/g, ' ');
+			const htmlDefault = `<!DOCTYPE html>\n<html lang="en" dir="ltr">\n˘˘<head>\n˘˘˘˘<meta charset="utf-8">\n˘˘˘˘<title>${name}</title>\n˘˘</head>\n˘˘<body>\n˘˘</body>\n</html>`.replace(/[˘]/g, ' ');
 			fs.writeFileSync(`${name}.${realHtmlType}`, htmlDefault, { encoding: 'utf-8' });
 		}
 	}
@@ -83,6 +83,68 @@ class HTMLNotebook extends Nodebook {
 
 		fs.writeFileSync(`${name}.${type}`, lines.join('\n'), { encoding: 'utf-8' });
 		fs.writeFileSync('.booklog.txt', `[Nodebook  ${Date.now()}] Created Link with Relationship "${rel}" From "${href}" In File "${name}.${type}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
+	}
+	addElement(element, value, inBody, selfClose, style, styleclass, styleid, spaces) {
+		const name = this.name;
+		const type = this.type;
+
+		err = new NodebookError('Please provide a valid element name.');
+		if (!element || typeof element !== 'string') throw err;
+
+		err = new NodebookError('Please provide the element\'s value as a valid string. If it is self closing, this is the href.');
+		if (!value || typeof value !== 'string') throw err;
+
+		err = new NodebookError('"inBody" must be a valid boolean.');
+
+		if (!inBody) inBody = true;
+		if (typeof inBody !== 'boolean') throw err;
+
+		err = new NodebookError('"selfClose" must be a valid boolean.');
+		if (!selfClose) selfClose = false;
+		if (typeof selfClose !== 'boolean') throw err;
+
+		if (!style) style = '';
+		if (!styleclass) styleclass = '';
+		if (!styleid) styleid = '';
+
+		err = new NodebookError('"style" must be a valid string.');
+
+		if (typeof style !== 'string') throw err;
+
+		err = new NodebookError('"styleclass" must be a valid string.');
+
+		if (typeof styleclass !== 'string') throw err;
+
+		err = new NodebookError('"styleid" must be a valid string.');
+
+		if (typeof styleid !== 'string') throw err;
+
+		err = new NodebookError('"spaces" must be a valid integer.');
+		if (!spaces) spaces = 0;
+		if (typeof spaces !== 'number' || !Number.isInteger(spaces)) throw err;
+
+		function parseSpaces(spaceInt) {
+			let spaceString = '';
+			for (let i = 0; i < spaceInt; i++) {
+				spaceString = spaceString + '˘';
+			}
+
+			return spaceString;
+		}
+		const lines = fs.readFileSync(`${name}.${type}`, { encoding: 'utf-8' }).split('\n');
+		let elementLine = fs.readFileSync(`${name}.${type}`, { encoding: 'utf-8' }).toString().split('\n').indexOf('</html>') + 1;
+		if (inBody) {
+			elementLine = fs.readFileSync(`${name}.${type}`, { encoding: 'utf-8' }).toString().split('\n').indexOf('˘˘</body>'.replace(/[˘]/g, ' ')) - 1;
+		}
+		const oldcode = lines[elementLine];
+
+		const newcode = selfClose ? (parseSpaces(spaces) + `<${element} href="${value}" style="${style}" class="${styleclass}" id="${styleid}">`).replace(/[˘]/g, ' ') : (parseSpaces(spaces) + `<${element} style="${style}" class="${styleclass}" id="${styleid}">${value}</${element}>`).replace(/[˘]/g, ' ');
+
+		lines[elementLine] = `${oldcode}\n${newcode}`;
+
+		fs.writeFileSync(`${name}.${type}`, lines.join('\n'), { encoding: 'utf-8' });
+		fs.writeFileSync('.booklog.txt', `[Nodebook  ${Date.now()}] Added Element "${element}":\nSelf Closing: ${selfClose}\nValue (or href): ${value}\nClass: "${styleclass}"\nID: "${styleid}"\nStyle: "${style}"\nFile: "${name}.${type}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
+
 	}
 }
 
