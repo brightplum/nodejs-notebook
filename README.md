@@ -43,14 +43,14 @@ myNotebook.fileName({ lower: false });
 Clears .booklog.txt
 
 ```js
-myNotebook.clearLog();
+Nodebook.clearLog();
 // clears .booklog.txt
 ```
 #### resetFile()
 Resets the file.
 
 ```js
-Nodebook.resetFile();
+myNotebook.resetFile();
 // resets file_name.txt
 ```
 #### deleteFile(delay)
