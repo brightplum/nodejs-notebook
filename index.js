@@ -6,6 +6,7 @@ Created by GamerCoder215
 
 */
 const fs = require('fs');
+const { NodebookManager } = require('./src/NodebookManager.js');
 
 // Default Classes
 const { NodebookError } = require('./src/NodebookError.js');
@@ -44,10 +45,15 @@ function clearLog() {
 	fs.writeFileSync('.booklog.txt', `# Beginning of Nodebook Log\n[Nodebook  ${Date.now()}] - Reset Logs`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
 }
 
+function getManager() {
+	return new NodebookManager();
+}
+
 
 module.exports = {
 	// Functions
 	clearLog,
+	getManager,
 	// Default
 	Nodebook,
 	NodebookError,

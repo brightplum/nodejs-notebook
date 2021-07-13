@@ -1,4 +1,5 @@
 const fs = require('fs');
+const zlib = require('zlib');
 
 const { NodebookError } = require('./NodebookError.js');
 
@@ -145,6 +146,21 @@ class Nodebook {
 		fs.writeFileSync(`${newFileName}.${type}`, fs.readFileSync(`${this.name}.${type}`).toString(), { encoding: encode });
 
 		fs.writeFileSync('.booklog.txt', `\n[Nodebook  ${Date.now()}] - Duplicated File "${this.name}.${type}" as "${newFileName}.${type}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
+	}
+	compress(type) {
+		const name = this.name;
+		const filetype = this.type;
+
+		const err = new NodebookError('"type" must be "zip", "tar", or "gz"');
+
+		if (!type || typeof type !== 'string' || (type !== 'zip' && type !== 'tar' && type !== 'gz')) throw err;
+
+		const gzip = zlib.createGzip();
+
+		const input = fs.createReadStream(`${name}.${filetype}`);
+		const output = fs.createWriteStream(`${name}.${filetype}.${type}`);
+
+		input.pipe(gzip).pipe(output);
 	}
 
 }
