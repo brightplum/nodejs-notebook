@@ -1,8 +1,8 @@
 # nodejs-notebook
 [![npm version](https://img.shields.io/npm/v/nodejs-notebook.svg)](https://npmjs.com/package/nodejs-notebook)
 [![downloads](https://img.shields.io/npm/dw/nodejs-notebook.svg)](https://npmjs.com/package/nodejs-notebook)
-[![GitHub](https://img.shields.io/github/license/gamercoder215/nodejs-notebook.svg)](https://github.com/GamerCoder215/nodejs-notebook)
-[![GitHub last commit](https://img.shields.io/github/last-commit/gamercoder215/nodejs-notebook.svg)](https://github.com/GamerCoder215/nodejs-notebook/commit/master)
+[![GitHub](https://img.shields.io/github/license/brightplum/nodejs-notebook.svg)](https://github.com/brightplum/nodejs-notebook)
+[![GitHub last commit](https://img.shields.io/github/last-commit/brightplum/nodejs-notebook.svg)](https://github.com/brightplum/nodejs-notebook/commit/master)
 ![GitHub issues](https://img.shields.io/github/issues/gamercoder215/nodejs-notebook.svg)
 > Automate editing and managing any file type in the world
 
