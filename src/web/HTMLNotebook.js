@@ -53,7 +53,7 @@ class HTMLNotebook extends Nodebook {
 		if (fileString.includes(`˘˘˘˘<meta property="${property}"`.replace(/[˘]/g, ' '))) {
 			lines[lines.indexOf(oldcode)] = newcode;
 		}
-		else lines[metaLine] = `${newcode}\n${oldcode}`;
+		else {lines[metaLine] = `${newcode}\n${oldcode}`;}
 
 		fs.writeFileSync(`${name}.${type}`, lines.join('\n'), { encoding: 'utf-8' });
 		fs.writeFileSync('.booklog.txt', `[Nodebook  ${Date.now()}] Created Meta with Property "${property}" In File "${name}.${type}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
@@ -79,7 +79,7 @@ class HTMLNotebook extends Nodebook {
 		if (fileString.includes(`˘˘˘˘<link rel="${rel}"`.replace(/[˘]/g, ' '))) {
 			lines[lines.indexOf(oldcode)] = newcode;
 		}
-		else lines[linkLine] = `${newcode}\n${oldcode}`;
+		else {lines[linkLine] = `${newcode}\n${oldcode}`;}
 
 		fs.writeFileSync(`${name}.${type}`, lines.join('\n'), { encoding: 'utf-8' });
 		fs.writeFileSync('.booklog.txt', `[Nodebook  ${Date.now()}] Created Link with Relationship "${rel}" From "${href}" In File "${name}.${type}"`, { encoding: 'utf-8', flag: 'a+', mode: 0o666 });
@@ -149,5 +149,5 @@ class HTMLNotebook extends Nodebook {
 }
 
 module.exports = {
-	HTMLNotebook
+	HTMLNotebook,
 };

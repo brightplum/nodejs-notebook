@@ -15,9 +15,9 @@ class TSNotebook extends JSNotebook {
 
 		this.name = name;
 	}
-	
+
 }
 
 module.exports = {
-	TSNotebook
+	TSNotebook,
 };
